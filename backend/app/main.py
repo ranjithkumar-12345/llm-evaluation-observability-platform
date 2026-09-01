@@ -1,16 +1,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings
-from app.logging_config import logger
 
-# Create FastAPI app
+from app.databasee import Base, engine
+from app.logging_config import logger
+from app.routes.documents import router as documents_router
+from app.routes.evaluation import router as evaluation_router
+from app.routes.dashboard import router as dashboard_router
+
+
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI(
-    title="LLM Evaluation Platform",
-    description="Evaluate RAG system quality",
-    version="1.0.0"
+    title="LLM Evaluation & Observability Platform",
+    version="1.0.0",
+    description="Automated Evaluation & Observability for RAG Applications"
 )
 
-# Enable CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,16 +25,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(documents_router, prefix="/api/documents", tags=["Documents"])
+app.include_router(evaluation_router, prefix="/api/evaluate", tags=["Evaluation"])
+app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard"])
+
+
 @app.get("/")
 async def root():
-    logger.info("Root endpoint called")
-    return {
-        "message": "LLM Evaluation Platform",
-        "status": "running"
-    }
+    return {"message": "LLM Evaluation Platform API is running."}
+
 
 @app.get("/health")
-async def health():
+async def health_check():
     return {"status": "healthy"}
-
-logger.info("Application started successfully!")
