@@ -3,10 +3,10 @@ from sqlalchemy import Column,String,Integer,Float,Text,DateTime
 from app.databasee import Base,engine
 
 class EvaluationLog(Base):
-    __tablename__ = "Evaluation_logs"
+    __tablename__ = "evaluation_logs"
     id =Column(Integer ,primary_key =True,index = True)
     query = Column(Text,nullable=False)
-    retrived_context=Column(Text, nullable=True)
+    retrieved_context=Column(Text, nullable=True)
     generated_answer = Column(Text, nullable=False)
     context_relevance = Column(Float, nullable=True)
     faithfulness = Column(Float, nullable=True)

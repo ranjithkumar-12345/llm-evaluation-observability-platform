@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 
 from app.config import settings
 from app.logging_config import logger
-from app.database import db_manager
+from app.database.db_manager import db_manager
 
 
 class RAGEngine:
