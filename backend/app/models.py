@@ -1,8 +1,8 @@
 from datetime import datetime
 from sqlalchemy import Column,String,Integer,Float,Text,DateTime
-from app.database import base,engine
+from app.databasee import Base,engine
 
-class EvaluationLog(base):
+class EvaluationLog(Base):
     __tablename__ = "Evaluation_logs"
     id =Column(Integer ,primary_key =True,index = True)
     query = Column(Text,nullable=False)
@@ -16,7 +16,7 @@ class EvaluationLog(base):
     timestamp = Column(DateTime, default=datetime.utcnow)
 
 
-class DocumentLog(base):
+class DocumentLog(Base):
     __tablename__ = "document_logs"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -27,5 +27,5 @@ class DocumentLog(base):
 
 
 if __name__ =="__main__":
-    base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     print("Tables Created Successfully")
