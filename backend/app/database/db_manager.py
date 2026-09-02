@@ -2,87 +2,172 @@ import chromadb
 from app.config import settings
 from app.logging_config import logger
 from dotenv import load_dotenv
-from typing import List,Dict,Any
+from typing import List, Dict, Any
 
-load_dotenv
+load_dotenv()
 
-class ChromaDBManager():
+
+class ChromaDBManager:
+
     def __init__(self):
 
         try:
-            self.client = chromadb.PersistentClient(path = settings.CHROMA_PERSIST_DIR)
+            self.client = chromadb.PersistentClient(
+                path=settings.CHROMA_PERSIST_DIR
+            )
 
             self.collection = self.client.get_or_create_collection(
-                name = "rag_documents",
+                name="rag_documents",
+                metadata={"hnsw:space": "cosine"}
+            )
 
-                metadata = {"hnsw:space":"cosine"}
-                )
-            logger.info("Chromadb is intialized and rag_documents is ready") 
+            logger.info(
+                "ChromaDB is initialized and rag_documents is ready"
+            )
 
         except Exception as e:
-            logger.error(f"failed to intialized chromadb:{str(e)}")
-            raise e
-    
 
-    def add_documents(self,documents,embeddings):
+            logger.exception(
+                f"Failed to initialize ChromaDB: {e}"
+            )
+
+            raise
+
+    # --------------------------------------------------
+    # ADD DOCUMENTS
+    # --------------------------------------------------
+
+    def add_documents(
+        self,
+        ids,
+        documents,
+        embeddings,
+        metadatas
+    ):
 
         try:
-            ids = [doc[id] for doc in documents]
 
-            contents = [doc["content"] for doc in documents]
-
-            metadatas = [doc.get("metadata",{}) for doc in documents]
+            # Validate lengths
+            if not (
+                len(ids)
+                == len(documents)
+                == len(embeddings)
+                == len(metadatas)
+            ):
+                raise ValueError(
+                    "ids, documents, embeddings and metadatas "
+                    "must have the same length."
+                )
 
             self.collection.add(
                 ids=ids,
-                embeddings = embeddings,
-                documents=contents,
-                metadatas= metadatas
-                )
+                documents=documents,
+                embeddings=embeddings,
+                metadatas=metadatas
+            )
 
-            logger.info(f"Successfully installed {len(ids)} document chunks in Chromadb.")
+            logger.info(
+                f"Successfully installed "
+                f"{len(ids)} document chunks in ChromaDB."
+            )
 
         except Exception as e:
-            logger.error(f"error adding documents in chromadb:{str(e)}")
 
-            raise e
+            logger.exception(
+                f"Error adding documents in ChromaDB: {e}"
+            )
 
+            raise
 
-    def query(self,query_embedding:List[float],top_k:int=5)->Dict[str,Any]:
+    # --------------------------------------------------
+    # QUERY
+    # --------------------------------------------------
+
+    def query(
+        self,
+        query_embedding: List[float],
+        top_k: int = 5
+    ) -> Dict[str, Any]:
 
         try:
-            results = self.collection.query(
-                query_embeddings = [query_embedding],
-                n_results = top_k
 
-                )
-            logger.info(f"Query returned {len(results.get('documents', [[]])[0])} matching chunks.")
+            results = self.collection.query(
+                query_embeddings=[query_embedding],
+                n_results=top_k
+            )
+
+            logger.info(
+                f"Query returned "
+                f"{len(results.get('documents', [[]])[0])} "
+                f"matching chunks."
+            )
+
             return results
 
         except Exception as e:
-            logger.error(f"Error querying ChromaDB: {str(e)}")
-            raise e
 
-    def delete_documents(self,doc_id):
+            logger.exception(
+                f"Error querying ChromaDB: {e}"
+            )
+
+            raise
+
+    # --------------------------------------------------
+    # DELETE DOCUMENT CHUNKS
+    # --------------------------------------------------
+
+    def delete_documents_by_doc_id(
+        self,
+        doc_id: str
+    ):
 
         try:
-            self.collection.delete(ids=[doc_id])
-            logger.info(f"Deleted document with ID: {doc_id} from ChromaDB.")
+
+            self.collection.delete(
+                where={
+                    "doc_id": doc_id
+                }
+            )
+
+            logger.info(
+                f"Deleted all chunks for document "
+                f"{doc_id} from ChromaDB."
+            )
 
         except Exception as e:
-            logger.error(f"Error deleting document {doc_id}: {str(e)}")
-            raise e
 
-    def get_all_documents(self)->Dict[List,Any]:
+            logger.exception(
+                f"Error deleting document {doc_id}: {e}"
+            )
+
+            raise
+
+    # --------------------------------------------------
+    # GET ALL DOCUMENTS
+    # --------------------------------------------------
+
+    def get_all_documents(self) -> Dict[str, Any]:
 
         try:
+
             return self.collection.get()
-        
+
         except Exception as e:
-            logger.error(f"Error fetching all documents from ChromaDB: {str(e)}")
-            raise e
+
+            logger.exception(
+                f"Error fetching all documents "
+                f"from ChromaDB: {e}"
+            )
+
+            raise
+
+
+# --------------------------------------------------
+# CREATE DATABASE MANAGER
+# --------------------------------------------------
 
 db_manager = ChromaDBManager()
 
-if __name__ =="__main__":
+
+if __name__ == "__main__":
     print(db_manager)

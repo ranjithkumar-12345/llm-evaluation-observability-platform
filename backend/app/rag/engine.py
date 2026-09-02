@@ -54,29 +54,22 @@ class RAGEngine:
             logger.error(f"Error retrieving context for query '{query}': {str(e)}")
             raise e
 
-    def generate_answer(self, query: str, contexts: List[str]) -> str:
-        try:
-            context_block = "\n\n".join(
-                [f"[Context {i+1}]: {ctx}" for i, ctx in enumerate(contexts)]
-            )
-
-            prompt = (
-                "You are an accurate, helpful AI assistant. Answer the user's question "
-                "strictly using the provided context information below. If the answer cannot "
-                "be derived from the context, clearly state that the information is unavailable.\n\n"
-                f"--- CONTEXT ---\n{context_block}\n\n"
-                f"--- QUESTION ---\n{query}\n\n"
-                "--- ANSWER ---"
-            )
-
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt
-            )
-            return response.text.strip() if response.text else "No response generated."
-        except Exception as e:
-            logger.error(f"Error generating answer from Gemini: {str(e)}")
-            raise e
+    def generate_answer(self, query: str, context: list) -> str:
+        prompt = f"Context:\n{context}\n\nQuestion: {query}\nAnswer:"
+        
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model="gemini-3.6-flash",
+                    contents=prompt
+                )
+                return response.text
+            except Exception as e:
+                if "503" in str(e) and attempt < max_retries - 1:
+                    time.sleep(2)  # Wait 2 seconds before retrying
+                    continue
+                raise e
 
     def query_rag(self, query: str, top_k: int = None) -> Dict[str, Any]:
         start_time = time.time()

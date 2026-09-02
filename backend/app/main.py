@@ -7,7 +7,7 @@ from app.routes.documents import router as documents_router
 from app.routes.evaluation import router as evaluation_router
 from app.routes.dashboard import router as dashboard_router
 
-
+# Ensure all database tables exist on startup
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -16,7 +16,7 @@ app = FastAPI(
     description="Automated Evaluation & Observability for RAG Applications"
 )
 
-
+# Enable CORS for frontend dashboard access
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,6 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include sub-routers with clean prefixes
 app.include_router(documents_router, prefix="/api/documents", tags=["Documents"])
 app.include_router(evaluation_router, prefix="/api/evaluate", tags=["Evaluation"])
 app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard"])
