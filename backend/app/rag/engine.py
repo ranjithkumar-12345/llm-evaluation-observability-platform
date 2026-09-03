@@ -1,7 +1,6 @@
 import time
 from typing import List, Dict, Any, Tuple
 from google import genai
-from sentence_transformers import SentenceTransformer
 
 from app.config import settings
 from app.logging_config import logger
@@ -11,30 +10,33 @@ from app.database.db_manager import db_manager
 class RAGEngine:
     def __init__(self):
         try:
-            
             self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
-            self.model_name = "gemini-flash-latest"
+            self.model_name = "gemini-3.6-flash"
+            self.embedding_model_name = "text-embedding-004"
 
-            
-            logger.info(f"loading embedding model: {settings.EMBEDDING_MODEL}")
-            self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
-            logger.info("RAG_Engine has successfully initialized")
+            logger.info(f"RAG_Engine initialized using lightweight API embeddings: {self.embedding_model_name}")
         except Exception as e:
-            logger.error("Failed to initialize RAG_Engine")
+            logger.error(f"Failed to initialize RAG_Engine: {str(e)}")
             raise e
 
     def embed_text(self, text: str) -> List[float]:
         try:
-            embedding = self.embedding_model.encode(text, convert_to_numpy=True)
-            return embedding.tolist()
+            response = self.client.models.embed_content(
+                model=self.embedding_model_name,
+                contents=text
+            )
+            return response.embedding.values
         except Exception as e:
             logger.error(f"embedding text error: {str(e)}")
             raise e
 
     def embed_batch(self, texts: List[str]) -> List[List[float]]:
         try:
-            embeddings = self.embedding_model.encode(texts, convert_to_numpy=True)
-            return embeddings.tolist()
+            embeddings = []
+            for t in texts:
+                emb = self.embed_text(t)
+                embeddings.append(emb)
+            return embeddings
         except Exception as e:
             logger.error(f"embedding batch error: {str(e)}")
             raise e
@@ -61,13 +63,14 @@ class RAGEngine:
         for attempt in range(max_retries):
             try:
                 response = self.client.models.generate_content(
-                    model="gemini-3.6-flash",
+                    model=self.model_name,
                     contents=prompt
                 )
                 return response.text
             except Exception as e:
-                if "503" in str(e) and attempt < max_retries - 1:
-                    time.sleep(2)  # Wait 2 seconds before retrying
+                err_str = str(e)
+                if ("503" in err_str or "11001" in err_str) and attempt < max_retries - 1:
+                    time.sleep(2)
                     continue
                 raise e
 

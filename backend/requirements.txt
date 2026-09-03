@@ -3,7 +3,6 @@ uvicorn
 PyPDF2
 python-docx
 python-multipart
-sentence-transformers
 chromadb
 google-genai
 sqlalchemy
