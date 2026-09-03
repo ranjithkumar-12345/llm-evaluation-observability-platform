@@ -64,7 +64,7 @@ async def upload_document(file: UploadFile = File(...)):
 
                 if extracted:
                     raw_text += extracted + "\n"
-                    
+
         elif filename.lower().endswith(".docx"):
         
             doc = Document(
@@ -82,7 +82,7 @@ async def upload_document(file: UploadFile = File(...)):
         else:
             raise HTTPException(
                 status_code=400,
-                detail="Only .pdf and .txt files are supported."
+                detail="Only .pdf ,.docx and .txt files are supported."
             )
 
         # -----------------------------------------
