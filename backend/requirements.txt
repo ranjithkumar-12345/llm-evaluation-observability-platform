@@ -8,3 +8,4 @@ google-genai
 sqlalchemy
 pydantic
 scikit-learn
+rouge-score
