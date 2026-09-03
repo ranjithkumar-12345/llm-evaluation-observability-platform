@@ -15,7 +15,7 @@ A production-ready evaluation and observability platform for Retrieval-Augmented
 
 | Feature | Description |
 |---------|-------------|
-| **Multi-Format Ingestion** | Text parsing and sliding window chunking across `.pdf`, `.docx`, `.txt`, `.csv`, `.json`, and `.md` formats |
+| **Multi-Format Ingestion** | Text parsing and sliding window chunking across `.pdf`, `.docx`, `.txt` and `.md` formats |
 | **RAG Triad Evaluation** | Real-time scoring for Context Relevance, Faithfulness (hallucination detection), and Answer Relevance |
 | **Ground Truth Benchmarking** | ROUGE-L syntactic and semantic overlap scoring against golden reference datasets |
 | **Persistent Vector Storage** | ChromaDB integration backed by Google's lightweight `text-embedding-004` API for ultra-low memory usage |
