@@ -392,7 +392,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 - **Interactive API Docs (Swagger UI):** [(https://llm-evaluation-observability-platform.onrender.com)/docs] (https://llm-evaluation-observability-platform.onrender.com/docs)
 - **Alternative API Docs (ReDoc):** [https://llm-evaluation-observability-platform.onrender.com/docs]( https://llm-evaluation-observability-platform.onrender.com/redoc)
-- **GitHub Repository:** [https://github.com/YOUR_USERNAME/llm-evaluation-observability-platform](https://github.com/ranjithkumar-12345/llm-evaluation-observability-platform)
+- **GitHub Repository:** [https://github.com/ranjithkumar-12345/llm-evaluation-observability-platform](https://github.com/ranjithkumar-12345/llm-evaluation-observability-platform)
 
 ---
 
