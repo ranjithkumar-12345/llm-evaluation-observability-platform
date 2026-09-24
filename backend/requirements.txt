@@ -9,3 +9,6 @@ sqlalchemy
 pydantic
 scikit-learn
 rouge-score
+streamlit
+httpx
+pytest

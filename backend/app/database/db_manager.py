@@ -16,6 +16,8 @@ class ChromaDBManager:
                 path=settings.CHROMA_PERSIST_DIR
             )
 
+            self.client.delete_collection(name="rag_documents")
+
             self.collection = self.client.get_or_create_collection(
                 name="rag_documents",
                 metadata={"hnsw:space": "cosine"}

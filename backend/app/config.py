@@ -18,7 +18,7 @@ class Settings:
     APP_PORT: int = int(os.getenv("APP_PORT", "8000"))
     
     # RAG settings
-    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+    EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "gemini-embedding-2")
     TOP_K_RETRIEVAL: int = int(os.getenv("TOP_K_RETRIEVAL", "5"))
     
     # Logging

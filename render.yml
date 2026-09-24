@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: llm-eval-platform
+    env: docker
+    region: singapore
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "query": "What is Python?",
+    "ground_truth": "Python is a high-level, interpreted, general-purpose programming language widely used in AI and ML."
+  },
+  {
+    "id": 2,
+    "query": "What is RAG?",
+    "ground_truth": "RAG stands for Retrieval-Augmented Generation, combining external document retrieval with an LLM."
+  },
+  {
+    "id": 3,
+    "query": "What is ChromaDB?",
+    "ground_truth": "ChromaDB is an open-source vector database used for embedding storage and similarity search."
+  }
+]

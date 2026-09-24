@@ -1532,3 +1532,431 @@
 2026-09-02 21:42:37,680 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent "HTTP/1.1 200 OK"
 2026-09-02 21:42:39,160 - absl - INFO - Using default tokenizer.
 2026-09-02 21:42:39,188 - app.logging_config - INFO - Evaluation completed for query: 'What is RAG?' (Log ID: 5)
+2026-09-24 17:56:29,617 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 17:56:35,416 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 17:56:38,148 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 17:56:58,483 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-09-24 17:56:59,351 - httpx - INFO - HTTP Request: GET http://testserver/app/documents/ "HTTP/1.1 404 Not Found"
+2026-09-24 17:56:59,387 - httpx - INFO - HTTP Request: GET http://testserver/app/dashboard/stats "HTTP/1.1 404 Not Found"
+2026-09-24 17:58:49,058 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 17:58:50,838 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 17:58:53,844 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 17:58:57,104 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-09-24 17:58:57,131 - httpx - INFO - HTTP Request: GET http://testserver/api/documents/ "HTTP/1.1 200 OK"
+2026-09-24 17:58:57,160 - httpx - INFO - HTTP Request: GET http://testserver/api/dashboard/stats "HTTP/1.1 200 OK"
+2026-09-24 18:08:40,616 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 18:08:42,538 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 18:08:44,796 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 18:09:56,998 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 18:09:58,815 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 18:10:01,030 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 18:10:51,070 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 18:10:51,071 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 18:10:51,979 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-09-24 18:10:51,986 - app.logging_config - ERROR - embedding text error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 18:10:51,990 - app.logging_config - ERROR - embedding batch error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 18:10:51,997 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 148, in upload_document
+    embeddings = rag_engine.embed_batch(chunks)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 42, in embed_batch
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 37, in embed_batch
+    emb = self.embed_text(t)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 31, in embed_text
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 24, in embed_text
+    response = self.client.models.embed_content(
+        model=self.embedding_model_name,
+        contents=text
+    )
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\models.py", line 6125, in embed_content
+    return self._embed_content(model=model, contents=contents, config=config)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\models.py", line 4936, in _embed_content
+    response = self._api_client.request(
+        'post', path, request_dict, http_options
+    )
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1747, in request
+    response = self._request(http_request, http_options, stream=False)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1534, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python314\Lib\concurrent\futures\_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python314\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1511, in _request_once
+    errors.APIError.raise_for_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\errors.py", line 173, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\errors.py", line 202, in raise_error
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,210 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-09-24 19:26:36,211 - app.logging_config - ERROR - embedding text error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,212 - app.logging_config - ERROR - Error retrieving context for query 'What is Python?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,212 - app.logging_config - ERROR - RAG query execution failed: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,212 - app.logging_config - ERROR - Error evaluating query 'What is Python?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,212 - app.logging_config - ERROR - Error evaluating single query: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,481 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-09-24 19:26:36,483 - app.logging_config - ERROR - embedding text error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,483 - app.logging_config - ERROR - Error retrieving context for query 'What is RAG?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,484 - app.logging_config - ERROR - RAG query execution failed: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,484 - app.logging_config - ERROR - Error evaluating query 'What is RAG?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,485 - app.logging_config - ERROR - Error evaluating single query: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,765 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-09-24 19:26:36,776 - app.logging_config - ERROR - embedding text error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,807 - app.logging_config - ERROR - Error retrieving context for query 'What is ChromaDB?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,807 - app.logging_config - ERROR - RAG query execution failed: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,811 - app.logging_config - ERROR - Error evaluating query 'What is ChromaDB?': 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:26:36,811 - app.logging_config - ERROR - Error evaluating single query: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:30:12,224 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 19:30:13,855 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 19:30:15,557 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 19:53:56,866 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 19:53:58,259 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 19:54:01,887 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: text-embedding-004
+2026-09-24 19:54:34,093 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 19:54:34,093 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 19:54:34,708 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 404 Not Found"
+2026-09-24 19:54:34,710 - app.logging_config - ERROR - embedding text error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:54:34,710 - app.logging_config - ERROR - embedding batch error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 19:54:34,711 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 148, in upload_document
+    embeddings = rag_engine.embed_batch(chunks)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 42, in embed_batch
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 37, in embed_batch
+    emb = self.embed_text(t)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 31, in embed_text
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 24, in embed_text
+    response = self.client.models.embed_content(
+        model=self.embedding_model_name,
+        contents=text
+    )
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\models.py", line 6125, in embed_content
+    return self._embed_content(model=model, contents=contents, config=config)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\models.py", line 4936, in _embed_content
+    response = self._api_client.request(
+        'post', path, request_dict, http_options
+    )
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1747, in request
+    response = self._request(http_request, http_options, stream=False)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1534, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python314\Lib\concurrent\futures\_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python314\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\_api_client.py", line 1511, in _request_once
+    errors.APIError.raise_for_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\errors.py", line 173, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\google\genai\errors.py", line 202, in raise_error
+    raise ClientError(status_code, response_json, response)
+google.genai.errors.ClientError: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/text-embedding-004 is not found for API version v1beta, or is not supported for embedContent. Call ModelService.ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-09-24 20:03:04,504 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:03:07,646 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:03:10,043 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:04:43,734 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:04:43,734 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:04:51,770 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:04:51,809 - app.logging_config - ERROR - embedding text error: 'EmbedContentResponse' object has no attribute 'embedding'
+2026-09-24 20:04:51,809 - app.logging_config - ERROR - embedding batch error: 'EmbedContentResponse' object has no attribute 'embedding'
+2026-09-24 20:04:51,810 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 148, in upload_document
+    embeddings = rag_engine.embed_batch(chunks)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 42, in embed_batch
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 37, in embed_batch
+    emb = self.embed_text(t)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 31, in embed_text
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 28, in embed_text
+    return response.embedding.values
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\pydantic\main.py", line 1042, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'EmbedContentResponse' object has no attribute 'embedding'. Did you mean: 'embeddings'?
+2026-09-24 20:11:14,441 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:11:15,825 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:11:17,468 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:12:44,955 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:12:44,958 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:12:45,921 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:12:45,991 - app.logging_config - ERROR - embedding text error: 'EmbedContentResponse' object has no attribute 'embedding'
+2026-09-24 20:12:45,992 - app.logging_config - ERROR - embedding batch error: 'EmbedContentResponse' object has no attribute 'embedding'
+2026-09-24 20:12:45,992 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 148, in upload_document
+    embeddings = rag_engine.embed_batch(chunks)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 42, in embed_batch
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 37, in embed_batch
+    emb = self.embed_text(t)
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 31, in embed_text
+    raise e
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\rag\engine.py", line 28, in embed_text
+    return response.embedding.values
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\pydantic\main.py", line 1042, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'EmbedContentResponse' object has no attribute 'embedding'. Did you mean: 'embeddings'?
+2026-09-24 20:15:39,730 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:15:41,216 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:15:43,877 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:16:34,980 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:16:34,981 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:16:36,158 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:16:36,943 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:16:37,620 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:16:37,710 - app.logging_config - INFO - Embeddings generated successfully.
+2026-09-24 20:16:37,711 - app.logging_config - INFO - Adding documents to ChromaDB...
+2026-09-24 20:16:37,754 - app.logging_config - ERROR - Error adding documents in ChromaDB: Collection expecting embedding with dimension of 384, got 3072
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\database\db_manager.py", line 62, in add_documents
+    self.collection.add(
+    ~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\models\Collection.py", line 118, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\rust.py", line 484, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+chromadb.errors.InvalidArgumentError: Collection expecting embedding with dimension of 384, got 3072
+2026-09-24 20:16:37,790 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 172, in upload_document
+    db_manager.add_documents(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\database\db_manager.py", line 62, in add_documents
+    self.collection.add(
+    ~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\models\Collection.py", line 118, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\rust.py", line 484, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+chromadb.errors.InvalidArgumentError: Collection expecting embedding with dimension of 384, got 3072
+2026-09-24 20:21:17,805 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:21:19,646 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:21:21,362 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:21:35,222 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:21:35,223 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:21:36,266 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:21:37,234 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:21:37,894 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:21:37,916 - app.logging_config - INFO - Embeddings generated successfully.
+2026-09-24 20:21:37,916 - app.logging_config - INFO - Adding documents to ChromaDB...
+2026-09-24 20:21:37,921 - app.logging_config - ERROR - Error adding documents in ChromaDB: Collection expecting embedding with dimension of 384, got 1536
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\database\db_manager.py", line 62, in add_documents
+    self.collection.add(
+    ~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\models\Collection.py", line 118, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\rust.py", line 484, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+chromadb.errors.InvalidArgumentError: Collection expecting embedding with dimension of 384, got 1536
+2026-09-24 20:21:37,930 - app.logging_config - ERROR - Failed to process document AI Engineer Fresher Technical Interview.docx
+Traceback (most recent call last):
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\routes\documents.py", line 172, in upload_document
+    db_manager.add_documents(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\backend\app\database\db_manager.py", line 62, in add_documents
+    self.collection.add(
+    ~~~~~~~~~~~~~~~~~~~^
+        ids=ids,
+        ^^^^^^^^
+    ...<2 lines>...
+        metadatas=metadatas
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\models\Collection.py", line 118, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\hp\Desktop\llm evaluation & observability platform\venv\Lib\site-packages\chromadb\api\rust.py", line 484, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+chromadb.errors.InvalidArgumentError: Collection expecting embedding with dimension of 384, got 1536
+2026-09-24 20:24:41,853 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:24:43,387 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:24:45,200 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:25:26,975 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:25:26,976 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:25:39,178 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:25:39,830 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:25:40,632 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:25:40,651 - app.logging_config - INFO - Embeddings generated successfully.
+2026-09-24 20:25:40,655 - app.logging_config - INFO - Adding documents to ChromaDB...
+2026-09-24 20:25:40,798 - app.logging_config - INFO - Successfully installed 3 document chunks in ChromaDB.
+2026-09-24 20:25:40,798 - app.logging_config - INFO - Documents added to ChromaDB successfully.
+2026-09-24 20:25:40,824 - app.logging_config - INFO - Successfully processed AI Engineer Fresher Technical Interview.docx into 3 chunks.
+2026-09-24 20:27:00,304 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:27:00,356 - app.logging_config - INFO - Query returned 3 matching chunks.
+2026-09-24 20:27:00,357 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:27:00,357 - google_genai.models - WARNING - Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+2026-09-24 20:27:01,667 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:27:03,669 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:27:04,813 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:27:06,817 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:27:07,996 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:27:08,003 - app.logging_config - ERROR - RAG query execution failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-09-24 20:27:08,004 - app.logging_config - ERROR - Error evaluating query 'What is Python? ': 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-09-24 20:27:08,005 - app.logging_config - ERROR - Error in batch evaluation: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-09-24 20:30:25,827 - app.logging_config - INFO -  Logging configured successfully!
+2026-09-24 20:30:28,685 - app.logging_config - INFO - ChromaDB is initialized and rag_documents is ready
+2026-09-24 20:30:32,305 - app.logging_config - INFO - RAG_Engine initialized using lightweight API embeddings: gemini-embedding-2
+2026-09-24 20:31:04,648 - app.logging_config - INFO - Created 3 chunks from AI Engineer Fresher Technical Interview.docx
+2026-09-24 20:31:04,649 - app.logging_config - INFO - Generating embeddings for 3 chunks...
+2026-09-24 20:31:05,635 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:31:06,243 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:31:07,142 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:31:07,155 - app.logging_config - INFO - Embeddings generated successfully.
+2026-09-24 20:31:07,157 - app.logging_config - INFO - Adding documents to ChromaDB...
+2026-09-24 20:31:07,232 - app.logging_config - INFO - Successfully installed 3 document chunks in ChromaDB.
+2026-09-24 20:31:07,233 - app.logging_config - INFO - Documents added to ChromaDB successfully.
+2026-09-24 20:31:07,248 - app.logging_config - INFO - Successfully processed AI Engineer Fresher Technical Interview.docx into 3 chunks.
+2026-09-24 20:31:35,907 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:batchEmbedContents "HTTP/1.1 200 OK"
+2026-09-24 20:31:35,916 - app.logging_config - INFO - Query returned 3 matching chunks.
+2026-09-24 20:31:35,917 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:31:35,917 - google_genai.models - WARNING - Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+2026-09-24 20:31:37,171 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:31:39,173 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:31:40,052 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:31:42,054 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2026-09-24 20:31:43,496 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-09-24 20:31:43,501 - app.logging_config - ERROR - RAG query execution failed: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-09-24 20:31:43,501 - app.logging_config - ERROR - Error evaluating query 'What is Python? ': 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+2026-09-24 20:31:43,502 - app.logging_config - ERROR - Error in batch evaluation: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}

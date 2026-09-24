@@ -11,8 +11,8 @@ class RAGEngine:
     def __init__(self):
         try:
             self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
-            self.model_name = "gemini-3.6-flash"
-            self.embedding_model_name = "text-embedding-004"
+            self.model_name = "gemini-3.7-flash"
+            self.embedding_model_name = "gemini-embedding-2"
 
             logger.info(f"RAG_Engine initialized using lightweight API embeddings: {self.embedding_model_name}")
         except Exception as e:
@@ -23,9 +23,12 @@ class RAGEngine:
         try:
             response = self.client.models.embed_content(
                 model=self.embedding_model_name,
-                contents=text
+                contents=text,
+                config={
+                "output_dimensionality": 1536
+                }
             )
-            return response.embedding.values
+            return response.embeddings[0].values
         except Exception as e:
             logger.error(f"embedding text error: {str(e)}")
             raise e
